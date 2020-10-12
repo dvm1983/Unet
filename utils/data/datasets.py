@@ -1,3 +1,4 @@
+import numpy as np
 import os
 import json
 import cv2
@@ -59,8 +60,8 @@ class CustomDataset(Dataset):
             if self.preprocessing is not None:
                 preprocessed = self.preprocessing(image=img)
                 img = preprocessed['image']
-            
-        img = img.reshape(img.shape[2], img.shape[0], img.shape[1])
+
+        img = np.transpose(img, (2, 0, 1))
         img = torch.from_numpy(img).float()
         
         if self.masks:
